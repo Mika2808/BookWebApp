@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const { generateToken } = require('../middlewares/auth');
 
 // Controller function to create a new user
 exports.createUser = async (req, res) => {
@@ -79,5 +80,24 @@ exports.updateUser = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to update user' });
+  }
+};
+
+// Function to login
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.where({ email }).fetch({ require: false });
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    const isMatch = await bcrypt.compare(password, user.get('password'));
+    if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
+
+    const token = generateToken(user.toJSON());
+    res.status(200).json({ token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Login failed' });
   }
 };

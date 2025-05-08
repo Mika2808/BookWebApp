@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
   res.send('Hello, Book Review Web App!');
 });
 
+// Listening to the port
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

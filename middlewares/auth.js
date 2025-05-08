@@ -1,0 +1,47 @@
+const jwt = require('jsonwebtoken');
+const KEY = 'key123'; // Replace with an env variable in production
+
+// Verify JWT and attach user data to the request
+exports.verifyToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader?.split(' ')[1];
+
+  if (!token) return res.status(401).json({ error: 'Access token missing' });
+
+  jwt.verify(token, KEY, (err, user) => {
+    if (err) return res.status(403).json({ error: 'Invalid token' });
+
+    req.user = user; // Contains id, role, etc.
+    next();
+  });
+};
+
+// Generate a token (can be used in login controller)
+exports.generateToken = (user) => {
+  return jwt.sign({
+    id: user.id,
+    email: user.email,
+    role: user.role
+  }, KEY, { expiresIn: '1h' });
+};
+
+// Checking if user is admin
+exports.isAdmin = (req, res, next) => {
+    if (req.user?.role !== 'admin') {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+    next();
+  };
+
+// Checking if user is admin or logged user
+exports.isSelfOrAdmin = (req, res, next) => {
+    const loggedUserId = req.user.id;
+    const paramId = parseInt(req.params.id);
+  
+    if (req.user.role === 'admin' || loggedUserId === paramId) {
+      return next();
+    }
+  
+    return res.status(403).json({ error: 'Not authorized' });
+  };
+  
