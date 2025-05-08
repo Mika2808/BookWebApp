@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 // Use the user routes
-app.use('/api/users', userRoutes); // All user routes will be prefixed with /api/users
+app.use('/users', userRoutes); // All user routes will be prefixed with /api/users
 
 // A simple route for testing
 app.get('/', (req, res) => {

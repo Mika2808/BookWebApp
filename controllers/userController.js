@@ -40,7 +40,7 @@ exports.deleteUser = async (req, res) => {
     try {
       const deletedUser = await User.where({ id: userId }).destroy();
       if (deletedUser) {
-        res.status(200).json({ message: 'User deleted successfully' });
+        res.status(204).json({ message: 'User deleted successfully' });
       } else {
         res.status(404).json({ message: 'User not found' });
       }
@@ -49,3 +49,35 @@ exports.deleteUser = async (req, res) => {
       res.status(500).json({ message: 'Error deleting user' });
     }
   };
+
+// Controller function to update user data by id
+exports.updateUser = async (req, res) => {
+  const { id } = req.params;  // Get user ID from URL parameter
+  const { nick, email, password } = req.body;
+
+  try {
+    const user = await User.query().where('id', id).first();
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Hash new password if provided
+    let hashedPassword = user.password;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
+
+    // Update user details
+    const updatedUser = await User.query().where('id', id).update({
+      nick,
+      email,
+      password: hashedPassword,
+    });
+
+    res.status(200).json({ message: 'User updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update user' });
+  }
+};
