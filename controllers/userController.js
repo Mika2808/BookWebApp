@@ -2,13 +2,40 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../middlewares/auth');
 
+// User validation function
+const validateUserInput = async (nick, email) => {
+  const existingUserByEmail = await User.where('email', email).fetch({ require: false });
+  if (existingUserByEmail) {
+    throw new Error('Email is already taken');
+  }
+
+  const existingUserByNick = await User.where('nick', nick).fetch({ require: false });
+  if (existingUserByNick) {
+    throw new Error('Nick is already taken');
+  }
+};
+
+const validateEmailFormat = (email) => {
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return regex.test(email);
+};
+
 // Controller function to create a new user
 exports.createUser = async (req, res) => {
   const { nick, email, password } = req.body;
-  
-  const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
+    // Validate email format
+    if (!validateEmailFormat(email)) {
+      return res.status(400).json({ error: 'Invalid email format' });
+    }
+    
+    // Validate user input (check if the email and nick are unique)
+    await validateUserInput(nick, email);
+
+    // Hashing password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // Create a new user and save it
     const newUser = await new User({
       nick,
@@ -19,7 +46,7 @@ exports.createUser = async (req, res) => {
     res.status(201).json(newUser); // Return the created user
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to create user' });
+    res.status(400).json({ error: err.message });
   }
 };
 
