@@ -4,6 +4,8 @@
   "description": "Book Web App as a project for Web Technology",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev" : "nodemon index.js", 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +19,13 @@
   },
   "homepage": "https://github.com/Mika2808/BookWebApp#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "bcrypt": "^5.1.1",
+    "bookshelf": "^1.2.0",
+    "express": "^5.1.0",
+    "knex": "^3.1.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
