@@ -3,10 +3,17 @@ const userRoutes = require('./routes/userRoutes');
 const bookRoutes = require('./routes/bookRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const toReadRoutes = require('./routes/toReadRoutes');
-
+const cors = require('cors');
 const port = 1234;
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:5173', // Your frontend URL
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'], // Include 'Authorization' if you're using a token
+  credentials: true // Allow credentials such as cookies and authorization headers
+}));
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
