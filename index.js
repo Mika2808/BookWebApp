@@ -1,6 +1,8 @@
 const express = require('express');
-const { database } = require('./config/database');
 const userRoutes = require('./routes/userRoutes');
+const bookRoutes = require('./routes/bookRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
+const toReadRoutes = require('./routes/toReadRoutes');
 
 const port = 1234;
 
@@ -12,6 +14,15 @@ app.use(express.json());
 // Use the user routes
 app.use('/users', userRoutes); // All user routes will be prefixed with /api/users
 
+// Use the books routes
+app.use('/books', bookRoutes);
+
+// Use the books reviews routes
+app.use('/books', reviewRoutes);
+
+// Use the toRead routes
+app.use('/to-read', toReadRoutes);
+
 // A simple route for testing
 app.get('/', (req, res) => {
   res.send('Hello, Book Review Web App!');
@@ -21,12 +32,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-// Test database connection
-database.raw('SELECT 1+1 AS result')  // Simple query to test connection
-  .then(() => {
-    console.log('Database connected successfully!');
-  })
-  .catch((err) => {
-    console.log('Error connecting to the database:', err);
-  });

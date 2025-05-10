@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const KEY = 'key123'; // Replace with an env variable in production
+const KEY = 'key123';
 
 // Verify JWT and attach user data to the request
 exports.verifyToken = (req, res, next) => {
@@ -11,7 +11,7 @@ exports.verifyToken = (req, res, next) => {
   jwt.verify(token, KEY, (err, user) => {
     if (err) return res.status(403).json({ error: 'Invalid token' });
 
-    req.user = user; // Contains id, role, etc.
+    req.user = user;
     next();
   });
 };
@@ -33,6 +33,14 @@ exports.isAdmin = (req, res, next) => {
     next();
   };
 
+// Checking if user is not admin
+exports.isNotAdmin = (req, res, next) => {
+    if (req.user?.role === 'admin') {
+      return res.status(403).json({ error: 'Only user activity' });
+    }
+    next();
+  };
+
 // Checking if user is admin or logged user
 exports.isSelfOrAdmin = (req, res, next) => {
     const loggedUserId = req.user.id;
@@ -44,4 +52,17 @@ exports.isSelfOrAdmin = (req, res, next) => {
   
     return res.status(403).json({ error: 'Not authorized' });
   };
+
+  // Checking if user is logged user
+exports.isSelf = (req, res, next) => {
+    const loggedUserId = req.user.id;
+    const paramId = parseInt(req.params.id);
+  
+    if (loggedUserId === paramId) {
+      return next();
+    }
+  
+    return res.status(403).json({ error: 'Not authorized' });
+  };
+  
   
