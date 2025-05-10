@@ -21,4 +21,7 @@ router.delete('/:id', verifyToken, isAdmin, bookController.deleteBook);
 // GET books by category
 router.get('/category/:category', verifyToken, bookController.getBooksByCategory);
 
+// GET random book ("Book Roulette")
+router.get('/roulette', verifyToken, bookController.getRandomBook);
+
 module.exports = router;

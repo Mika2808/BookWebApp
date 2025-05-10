@@ -1,46 +1,58 @@
 # Book Review Web App
 
-## Stage 1
+## Stage 1 – Backend (Complete)
 
 ### Overview
-The project aims to create a web app similar to the Empik store in Poland, with a focus on books. Users will be able to browse books in different categories, check prices, add books to a "To Read" list, and leave reviews. Additionally, there will be a "Book Roulette" feature where users can discover a randomly selected book.
+A RESTful API for a book-focused web application inspired by platforms like Empik. Users can register, browse books by category, review them, and manage a personal "To Read" list. Admins have extended permissions for managing content.
 
-The backend will handle:
-- Full REST service
-- User core functionality (user database, encrypted passwords, authorization, validating user input)
-- Books database (storing all books, CRUD operations for user reviews)
+### Implemented Features
 
-### Objectives
+#### User Authentication & Security
+- User registration and login with:
+  - Hashed passwords using **bcrypt**
+  - Unique `email` and `nick` validation
+- JWT-based **authentication and role-based authorization**
+  - Admin users can manage all content
+  - Regular users can only edit their own data
+- Middleware for token verification and access control
 
-#### 1. User Authentication
-- Create a database for users to store `nick`, `password`, `email`, and `picture`.
-- Implement secure user registration and login.
-- Implement a system for validating user input (e.g., email format, password strength, and nick availability).
-- Implement **role-based access control**: Only admins can perform certain actions, such as adding, deleting, or updating books.
-
-#### 2. Book Management
-- Create a database for books to store details such as:
-  - Title
-  - Author
-  - Price
+#### Book Management
+- Database schema for books with fields:
+  - Title, Author, Price, Category, Cover Image
+- CRUD operations for books
+  - **Only admins** can create, update, or delete books
+- Browse books by:
+  - All books
   - Category
-  - Book cover image URL
-- Admin-only CRUD operations:
-  - **Adding new books** to the database.
-  - **Deleting books** from the database.
-  - **Updating books** in the database.
+  - Random (Book Roulette)
 
-#### 3. User Review System
-- Implement a review system where users can leave reviews for books, including:
-  - A **star rating** (scale 0-5 stars).
-  - A **comment section** for detailed feedback.
-- CRUD operations for reviews:
-  - **POST**: Add a review for a book.
-  - **PUT**: Update a review.
-  - **DELETE**: Delete a review.
+#### Reviews System
+- Users can:
+  - Add a review (rating + comment)
+  - Edit or delete their own reviews
+- Admins can delete any review
+- API paths structured as `/books/:id/reviews`
 
-#### 4. "To Read" List Management
-- Implement a feature that allows users to save chosen books to their "To Read" list in the user database.
+#### "To Read" List
+- Users can:
+  - Add books to their personal list
+  - View their saved books
+  - Remove books from the list
+- API paths structured for both book-level and user-level access
 
-#### 5. Book Roulette (Random Book Feature)
-- Implement a feature to select a random book from the book database and display it to the user.
+#### Data Validation
+- Server-side input validation for:
+  - Unique nicknames and emails
+  - Proper email format
+  - Presence of required fields
+
+---
+
+## Stage 2 – Client (Coming Next)
+
+### Goals
+- Build a **Progressive Web App (PWA)** using Vite + React
+- Implement all backend functionalities via frontend
+- Add client-side validation before submitting to backend
+- Cache content for offline use
+- Use at least one native feature (e.g., notifications or geolocation)
