@@ -7,7 +7,7 @@ const { verifyToken, isSelfOrAdmin, isSelf } = require('../middlewares/auth');
 router.post('/books/:id', verifyToken, toReadController.addToRead);
 
 // Get all books in user's to-read list (authenticated user)
-router.get('/to-read', verifyToken, isSelfOrAdmin, toReadController.getToReadList);
+router.get('/list/:id', verifyToken, isSelfOrAdmin, toReadController.getToReadList);
 
 // Remove book from to-read list (authenticated user)
 router.delete('/books/:id', verifyToken, isSelf, toReadController.removeFromToRead);

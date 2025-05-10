@@ -76,14 +76,18 @@ exports.getBooksByCategory = async (req, res) => {
 // Get random book
 exports.getRandomBook = async (req, res) => {
   try {
-    const books = await Book.find();
-    if (books.length === 0) {
+    const books = await Book.fetchAll();
+
+    const booksJSON = books.toJSON();
+
+    if (booksJSON.length === 0) {
       return res.status(404).json({ message: 'No books available' });
     }
-    const randomBook = books[Math.floor(Math.random() * books.length)];
+
+    const randomBook = booksJSON[Math.floor(Math.random() * booksJSON.length)];
     res.json(randomBook);
   } catch (error) {
+    console.error('Error fetching random book:', error);
     res.status(500).json({ error: 'Failed to fetch random book' });
   }
 };
-
