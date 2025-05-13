@@ -9,7 +9,7 @@ const port = 1234;
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Your frontend URL
+  origin: 'http://localhost:5173-', // Your frontend URL
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'], // Include 'Authorization' if you're using a token
   credentials: true // Allow credentials such as cookies and authorization headers
