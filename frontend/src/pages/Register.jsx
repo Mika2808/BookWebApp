@@ -24,11 +24,11 @@ export default function Register() {
 
     try {
       console.log('Submitting:', { nick, email, password});
-      await axios.post('http://localhost:1234/users/register', { nick, email, password });
+      await axios.post('/users/register', { nick, email, password });
       alert('Registered successfully!');
 
       try {
-      const res = await axios.post('http://localhost:1234/users/login', { email, password });
+      const res = await axios.post('/users/login', { email, password });
       localStorage.setItem('token', res.data.token);
       alert('Login successful');
       navigate('/home');

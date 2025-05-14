@@ -26,19 +26,18 @@ function HomePage() {
   
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('nick');
-    
+    localStorage.removeItem('nick');  
     navigate('/');
   };
 
   return (
-    <div className="homepage">
+    <div>
       <h2>Welcome, {nick}!</h2>
       
       <ul>
-        <li>🔍 Search Books</li>
-        <li>📚 ToRead List</li>
-        <li>🎲 Random Book</li>
+        <li><a href="/books">🔍 Search Books</a></li>
+        <li><a href="/to-read">📚 ToRead List</a></li>
+        <li><a href="/random-book">🎲 Random Book</a></li>
       </ul>
 
       <button onClick={handleLogout}>Log out</button>

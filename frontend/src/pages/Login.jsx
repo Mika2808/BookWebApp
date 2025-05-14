@@ -21,7 +21,7 @@ export default function Login() {
     }
 
     try {
-      const res = await axios.post('http://localhost:1234/users/login', { email, password });
+      const res = await axios.post('/users/login', { email, password });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('nick', res.data.nick)
       //alert('Login successful');
