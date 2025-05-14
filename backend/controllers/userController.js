@@ -123,7 +123,11 @@ exports.login = async (req, res) => {
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
 
     const token = generateToken(user.toJSON());
-    res.status(200).json({ token });
+    res.status(200).json({ 
+      token, 
+      nick: user.get('nick') 
+    });
+    
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Login failed' });

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from '../api/axios';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(''); // Clear previous errors
+    setIsSubmitting(true);
 
     // Simple front-end validation
     if (!email || !password) {
@@ -21,10 +23,13 @@ export default function Login() {
     try {
       const res = await axios.post('http://localhost:1234/users/login', { email, password });
       localStorage.setItem('token', res.data.token);
-      alert('Login successful');
-      navigate('/');
+      localStorage.setItem('nick', res.data.nick)
+      //alert('Login successful');
+      navigate('/home');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -66,6 +71,7 @@ export default function Login() {
           <button onClick={() => navigate('/')}>Back to home</button>
         </div>
       </div>
+      <footer>© 2025 Web Technologies Project</footer>
     </div>
   );
 }

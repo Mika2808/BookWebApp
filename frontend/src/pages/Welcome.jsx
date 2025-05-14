@@ -9,6 +9,7 @@ function Welcome() {
         <Link to="/login"><button>Login</button></Link>
         <Link to="/register"><button>Register</button></Link>
       </div>
+      <footer>© 2025 Web Technologies Project</footer>
     </div>
   );
 }

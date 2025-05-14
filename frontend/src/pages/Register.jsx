@@ -19,26 +19,22 @@ export default function Register() {
       setError('All fields are required');
       return;
     }
-
-    // Additional email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Please enter a valid email');
-      return;
-    }
-
-    // Password length check
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters long');
-      return;
-    }
-
+    
     setIsSubmitting(true);  // Disable submit button while sending request
 
     try {
-      await axios.post('/auth/register', { nick, email, password });
+      console.log('Submitting:', { nick, email, password});
+      await axios.post('http://localhost:1234/users/register', { nick, email, password });
       alert('Registered successfully!');
-      navigate('/login');
+
+      try {
+      const res = await axios.post('http://localhost:1234/users/login', { email, password });
+      localStorage.setItem('token', res.data.token);
+      alert('Login successful');
+      navigate('/home');
+      } catch (err) {
+        setError(err.response?.data?.error || 'Login failed.');
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed.');
     } finally {
@@ -50,6 +46,7 @@ export default function Register() {
     <div>
       <div>
         <h2>Register</h2>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <form onSubmit={handleSubmit}>
           <div>
             <input
@@ -93,6 +90,7 @@ export default function Register() {
           <button onClick={() => navigate('/')}>Back to home</button>
         </div>
       </div>
+      <footer>© 2025 Web Technologies Project</footer>
     </div>
   );
 }

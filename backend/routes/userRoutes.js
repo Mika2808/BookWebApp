@@ -11,10 +11,16 @@ router.post('/register', userController.createUser);
 router.post('/login', userController.login);
 
 // Define the route for getting all users
-router.get('/', verifyToken, isAdmin, userController.getUsers);
+router.get('/', 
+    verifyToken, 
+    isAdmin, 
+    userController.getUsers);
 
 // Define the route for deleting a users
-router.delete('/:id', verifyToken, isSelfOrAdmin, userController.deleteUser);
+router.delete('/:id', 
+    verifyToken, 
+    isSelfOrAdmin, 
+    userController.deleteUser);
 
 // Define the route for updating a users data
 router.put('/:id', verifyToken, isSelfOrAdmin, userController.updateUser);

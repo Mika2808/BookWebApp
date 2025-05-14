@@ -9,10 +9,10 @@ const port = 1234;
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173-', // Your frontend URL
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization'], // Include 'Authorization' if you're using a token
-  credentials: true // Allow credentials such as cookies and authorization headers
+  origin: 'http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 // Middleware to parse incoming JSON requests
