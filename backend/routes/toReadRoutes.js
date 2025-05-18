@@ -5,7 +5,7 @@ const { verifyToken, isSelfOrAdmin, isSelf } = require('../middlewares/auth');
 
 // Add book to the to-read list (authenticated user)
 router.post('/books/:id', 
-    //verifyToken, 
+    verifyToken, 
     toReadController.addToRead);
 
 // Get all books in user's to-read list (authenticated user)
