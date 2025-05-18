@@ -23,7 +23,7 @@ exports.addToRead = async (req, res) => {
 
 // Get user's full to-read list
 exports.getToReadList = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.params.id;
 
   try {
     const list = await ToRead.where({ user_id: userId }).fetchAll({ withRelated: ['book'] });

@@ -273,6 +273,26 @@ async function createToReadTable() {
   console.log('To-Read table created');
 }
 
+// Function to insert sample ToRead list
+async function insertSampleToReadTable() {
+  try {
+    // Example: insert 3 dummy records
+    const toReadData = [
+      { user_id: 1, book_id: 2 },
+      { user_id: 1, book_id: 3 },
+      { user_id: 2, book_id: 1 },
+    ];
+
+    for (const entry of toReadData) {
+      await database('to_read').insert(entry);
+    }
+
+  } catch (err) {
+    console.error('Error inserting to_read data:', err);
+  }
+}
+
+
 // Main function to reset and populate the database
 const resetDatabase = async () => {
   try {
@@ -283,6 +303,7 @@ const resetDatabase = async () => {
     await createReviewsTable();
     await insertSampleReviews();
     await createToReadTable();
+    await insertSampleToReadTable();
     
     console.log('Database reset and populated successfully!');
     process.exit(0);

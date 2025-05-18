@@ -125,7 +125,8 @@ exports.login = async (req, res) => {
     const token = generateToken(user.toJSON());
     res.status(200).json({ 
       token, 
-      nick: user.get('nick') 
+      nick: user.get('nick'),
+      id: user.get('id')
     });
     
   } catch (err) {

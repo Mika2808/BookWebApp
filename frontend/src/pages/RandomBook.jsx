@@ -11,7 +11,7 @@ function RandomBookPage() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('nick');
-    
+    localStorage.removeItem('id');    
     navigate('/');
   };
 

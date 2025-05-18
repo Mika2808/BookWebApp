@@ -12,8 +12,8 @@ router.post('/login', userController.login);
 
 // Define the route for getting all users
 router.get('/', 
-    verifyToken, 
-    isAdmin, 
+    //verifyToken, 
+    //isAdmin, 
     userController.getUsers);
 
 // Define the route for deleting a users

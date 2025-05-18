@@ -23,7 +23,8 @@ export default function Login() {
     try {
       const res = await axios.post('/users/login', { email, password });
       localStorage.setItem('token', res.data.token);
-      localStorage.setItem('nick', res.data.nick)
+      localStorage.setItem('nick', res.data.nick);
+      localStorage.setItem('id', res.data.id);
       //alert('Login successful');
       navigate('/home');
     } catch (err) {
