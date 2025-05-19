@@ -13,6 +13,11 @@ function BooksPage() {
   const token = localStorage.getItem('token');
   const [addStatusMap, setAddStatusMap] = useState({});
   
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+  const toggleSidebar = () => {
+    setSidebarExpanded(prev => !prev);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('nick');
@@ -71,54 +76,104 @@ function BooksPage() {
   }, []);
 
   return (
-    <div>
-      <h1>Books page</h1>
-    
-      <div>
-        <button onClick={() => navigate('/home')}>Back to home</button>
-        <button onClick={handleLogout}>Log out</button>
-      </div>
+    <div className="layout">
+      <aside className={`sidebar ${sidebarExpanded ? 'expanded' : 'collapsed'}`}>
+        <ul className="feature-list">
+          <li>
+            <a href="/home" className="feature-link">
+              <img src="src/img/house.svg" alt="Home" className="feature-icon" />
+              {sidebarExpanded && <span>Home</span>}
+            </a>
+          </li>
+          <li>
+            <a href="/books" className="feature-link">
+              <img src="src/img/search.svg" alt="Search Book" className="feature-icon" />
+              {sidebarExpanded && <span>Search Book</span>}
+            </a>
+          </li>
+          <li>
+            <a href="/to-read" className="feature-link">
+              <img src="src/img/list.svg" alt="To-Read List" className="feature-icon" />
+              {sidebarExpanded && <span>To-Read List</span>}
+            </a>
+          </li>
+          <li>
+            <a href="/random-book" className="feature-link">
+              <img src="src/img/dice.svg" alt="Book Roulette" className="feature-icon" />
+              {sidebarExpanded && <span>Book Roulette</span>}
+            </a>
+          </li>
+        </ul>
+        <button className="toggle-btn" onClick={toggleSidebar}>
+          {sidebarExpanded ? '<' : '>'}
+        </button>
+      </aside>
 
-      {paginatedBooks.map((book) => (
-        <div key={book.id} style={{ display: 'flex', marginBottom: '1em' }}>
-          
-          <div style={{ width: 100, height: 150, backgroundColor: '#ccc', marginRight: '1em' }}>
-            {book.cover ? (
-              <img src={book.cover} alt={book.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            ) : (
-              <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                No Image
-              </div>
-            )}
-          </div>
-
+      <main className="main-content">
+        <div className="feature-header" style={{ height: '10vh' }}>
+          <h1>Books Page</h1>
           <div>
-            <strong style={{ fontSize: '1.2em' }}>{book.title}</strong><br />
-            by <strong>{book.author}</strong><br />
-            in <em>{book.category}</em><br />
-            <span style={{ fontSize: '1.1em', fontWeight: 'bold' }}>${book.price}</span>
+            <button onClick={handleLogout} className="logout-btn" title="Log out">
+              <img src="src/img/exit.svg" alt="Log out" className="logout-icon" />
+            </button>
           </div>
-
-          <button onClick={() => addToRead(book.id)} disabled={addStatusMap[book.id] === 'adding'}>
-            {addStatusMap[book.id] === 'adding' ? 'Adding...' : 'Add to To-Read List'}
-            {addStatusMap[book.id] === 'error' && (
-              <span style={{ color: 'red', marginLeft: '8px' }}>Failed to add book.</span>
-            )}
-            {addStatusMap[book.id] === 'added' && (
-              <span style={{ color: 'green', marginLeft: '8px' }}>Book added!</span>
-            )}
-          </button>
-          
         </div>
-      ))}
 
-      <div>
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>Previous</button>
-        <span> Page {page} of {totalPages} </span>
-        <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</button>
-      </div>
+        <div className="feature-body" style={{ height: '80vh', overflowY: 'auto' }}>
+          {paginatedBooks.map((book) => (
+            <div key={book.id} className='book-page'>
+              <div className='book-image-body'>
+                {book.cover ? (
+                  <img
+                    src={book.cover}
+                    alt={book.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    No Image
+                  </div>
+                )}
+              </div>
 
-      <footer>© 2025 Web Technologies Project</footer>
+              <div style={{ flexGrow: 1, margin: '2em' }}>
+                <strong style={{ fontSize: '1.2em' }}>{book.title}</strong>
+                <br />
+                by <em>{book.author}</em>
+
+                <div style={{ margin: '2em' }}>
+                  <button onClick={() => navigate(`/books/${book.id}`)}>See more</button>
+                </div>
+              </div>
+
+            </div>
+          ))}
+
+          <div style={{ marginTop: '2em' }}>
+            <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+              {"<"}
+            </button>
+            <span style={{ margin: '0 1em' }}>
+              Page {page} of {totalPages}
+            </span>
+            <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+              {">"}
+            </button>
+          </div>
+        </div>
+
+        <div className="page-footer" style={{ height: '10vh' }}>
+          <footer>© 2025 Web Technologies Project</footer>
+        </div>
+      </main>
     </div>
   );
 }

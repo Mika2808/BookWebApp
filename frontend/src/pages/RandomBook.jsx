@@ -10,6 +10,11 @@ function RandomBookPage() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+  const toggleSidebar = () => {
+    setSidebarExpanded(prev => !prev);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('nick');
@@ -21,6 +26,7 @@ function RandomBookPage() {
     e.preventDefault();
     setError(''); // Clear previous errors
     setIsSubmitting(true);
+    setAddStatus('');
 
     try {
       const res = await axios.get('/books/roulette',{
@@ -64,37 +70,82 @@ function RandomBookPage() {
   };
 
   return (
-    <div>
-      <h2>Book roulette</h2>
-      
-      <div>
-        <button onClick={() => navigate('/home')}>Back to home</button>
-        <button onClick={handleLogout}>Log out</button>
-      </div>
-      
-      <div>
-        <button onClick={handleRoulette} disabled={isSubmitting}>
-              {isSubmitting ? '.......' : 'Book Roulette'}</button>
-      </div>
-      
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="layout">
+      <aside className={`sidebar ${sidebarExpanded ? 'expanded' : 'collapsed'}`}>
+        <ul className="feature-list">
+          <li>
+              <a href="/home" className="feature-link">
+                <img src="src/img/house.svg" alt="Home" className="feature-icon"/>
+                {sidebarExpanded && <span>Home</span>}
+              </a>
+          </li>
+          <li>
+            <a href="/books" className="feature-link">
+              <img src="src/img/search.svg" alt="Search Book Image" className="feature-icon"/>
+              {sidebarExpanded && <span>Search Book</span>}
+            </a>
+          </li>
+          <li>
+            <a href="/to-read" className="feature-link">
+              <img src="src/img/list.svg" alt="To-Read List Image" className="feature-icon" />
+              {sidebarExpanded && <span>To-Read List</span>}
+            </a>
+          </li>
+          <li>
+            <a href="/random-book" className="feature-link">
+              <img src="src/img/dice.svg" alt="Book Roulette Image" className="feature-icon" />
+              {sidebarExpanded && <span>Book Roulette</span>}
+            </a>
+          </li>
+        </ul>
+        <button className="toggle-btn" onClick={toggleSidebar}>
+          {sidebarExpanded ? '<' : '>'}
+        </button>
+      </aside>
 
-      {randomBook && (
-        <div style={{ marginTop: '20px' }}>
-          <h3>{randomBook.title}</h3>
-          <p><strong>Author:</strong> {randomBook.author}</p>
-          <p><strong>Category:</strong> {randomBook.category}</p>
-  
-          <button onClick={handleAddToRead} disabled={addStatus === 'adding'}>
-            {addStatus === 'adding' ? 'Adding...' : 'Add to To-Read List'}
-            {addStatus === 'error' && <span style={{ color: 'red', marginLeft: '8px' }}>Failed to add book.</span>}
-            {addStatus === 'added' && <span style={{ color: 'green', marginLeft: '8px' }}>Book added!</span>}
-          </button>
-  
+      <main className="main-content">
+        <div className="feature-header" style={{ height: '10vh' }}>
+          <h1>Book Roulette</h1>
+          <div>
+            <button onClick={handleLogout} className="logout-btn" title="Log out">
+              <img src="src/img/exit.svg" alt="Log out" className="logout-icon" />
+            </button>
+          </div>
         </div>
-      )}
 
-      <footer>© 2025 Web Technologies Project</footer>
+        <div className="feature-body" style={{ height: '80vh' }}>
+
+          <div style={{ marginTop: '40px', height: '20vh' }}>
+            <button onClick={handleRoulette} disabled={isSubmitting}>
+              {isSubmitting ? '.......' : '🎲 Book Roulette'}
+            </button>
+          </div>
+
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+
+          {randomBook && (
+            <div>
+              <div style={{ height: '30vh' }}>
+                <h2>{randomBook.title}</h2>
+                <p><strong>Author:</strong> {randomBook.author}</p>
+                <p><strong>Category:</strong> {randomBook.category}</p>
+              </div>
+
+              <div style={{ marginBottom: '40px', height: '20vh' }}>
+                <button onClick={handleAddToRead} disabled={addStatus === 'adding'}>
+                  {addStatus === 'adding' ? 'Adding...' : 'Add to To-Read List'}
+                  {addStatus === 'error' && <p style={{ color: 'red' }}>❌ Failed to add book.</p>}
+                  {addStatus === 'added' && <p style={{ color: 'green' }}>✅ Book added!</p>}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="page-footer" style={{ height: '10vh' }}>
+          <footer>© 2025 Web Technologies Project</footer>
+        </div>
+      </main>
     </div>
   );
 }

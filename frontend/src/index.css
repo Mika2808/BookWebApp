@@ -1,0 +1,255 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.page-welcome {
+  background-color: #FF8C00;
+  color: white;
+  position: relative;
+  text-align: center;
+  height: 100vh;
+  border-radius: 3vw;
+
+}
+
+.page-welcome form input {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 3vh;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  margin-top: 3vh;
+}
+
+.page-welcome h1 {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -200%);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: clamp(3rem, 5vw, 4rem);
+}
+
+.page-welcome p {
+    font-size: clamp(1.2rem, 1.4vw, 4rem);
+    margin-top: 4vh;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 2rem;
+  margin: 0 1vw;
+  border-radius: 1.5vw;
+  background-color: #333;
+  color: #eee;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-welcome button:hover {
+  background-color: #555;
+}
+
+.page-footer {
+  text-align: center;
+  border-top: 4px solid #fff;
+  font-size: clamp(1rem, 1vw, 4rem);
+  color: #fff;
+  height: 10vh;
+  background-color: #5c5e61;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar {
+  background-color: #FF8C00;
+  color: white;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar.expanded {
+  width: 20vw;
+  min-width: 190px;
+  border-right: 5px solid #333;  
+}
+
+.sidebar.collapsed {
+  width: 4vw;
+  min-width: 70px;
+  border-right: 5px solid #333;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 1rem;
+  margin: 0;
+}
+
+.feature-list li {
+  margin-bottom: 1rem;
+}
+
+.feature-list a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.toggle-btn {
+  background: none;
+  border: 1px solid white;
+  color: white;
+  padding: 0.5rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed + .main-content {
+  width: 90vw;
+}
+
+.feature-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 5px solid #000;
+  border-right: 5px solid #000;
+  background-color: #FF8C00;
+  border-bottom-right-radius: 3vw;
+}
+
+.feature-header h1{
+  text-transform: uppercase;
+  font-size: clamp(1.7rem, 5vw, 4rem);
+  color:#fff;
+  text-align: center;
+}
+
+.feature-body {
+  padding: 1rem;
+  flex-grow: 1;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.feature-body p{
+  text-align: center;
+  font-size: clamp(1.3rem, 1vw, 4rem);
+}
+
+.feature-body h2{
+  text-align: center;
+  font-size: clamp(1.4rem, 2vw, 4rem);
+}
+
+.feature-icon {
+  width: 2.0rem;
+  height: 2.0rem;
+  margin-right: 0.8rem;
+  margin-top: 1.0rem;
+  flex-shrink: 0;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.logout-icon {
+  width: 32px;
+  height: 32px;
+}
+
+li {
+  text-align:left;
+  font-size: clamp(1rem, 1.4vw, 4rem);
+}
+
+.book-page {
+  display: flex;
+  margin-bottom: 1em;
+  height: 30vh;
+  border: 10px solid #000;
+  border-radius: 2vw;
+  min-height: 200px;
+}
+
+.comment-page{
+  display: flex;
+  height: 10vh;
+  border: 3px solid #000;
+  border-radius: 2vw;
+  min-height: 130px;
+  margin: 16px;
+}
+
+.book-image-body {
+  width: 200px;
+  height: 30vh;
+  min-height: 200px;
+  background-color: #ccc;
+  border-bottom-left-radius: 2vw;
+  border-top-left-radius: 2vw;
+}
+
+.book-image-detailed {
+  width: 300px;
+  height: 500px;
+  background-color: #ccc;
+  border-radius: 2vw;
+}
+
+@media (max-width: 768px) {
+  .book-image-body {
+    display: none;
+  }
+  .book-image-detailed {
+    display: none;
+  }
+  .comment-page{
+    min-height: 270px;
+  }
+}
+
+@media (max-height: 960px) {
+  .book-image-detailed {
+    display: none;
+  }
+}
+
+.feature-body button {
+  font-size: 1.5em;
+}

@@ -36,43 +36,56 @@ export default function Login() {
 
   return (
     <div>
-      <div>
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
+      <div className='page-welcome'>
+        <div style={{ height: '30vh'}}>
+          <h1>Login</h1>
+        </div>
+        
+        <div style={{ height: '40vh'}}>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Logging in...' : 'Login'}
+              </button>
+            </div>
+          </form>
+        </div>
+        
+        <div style={{ height: '20vh'}}>
           <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Logging in...' : 'Login'}
-            </button>
-          </div>
-        </form>
+            <p><em>Don't have an account?{' '}
+              <a href="/register">Register here</a>
+            </em></p>
 
-        <p>Don't have an account?{' '}
-          <a href="/register">Register here</a>
-        </p>
+          </div>
 
-        <div>
-          <button onClick={() => navigate('/')}>Back to home</button>
+          <div>
+            <button onClick={() => navigate('/')}>Back to home</button>
+          </div>
+        </div>
+        
+        <div className='page-footer' style={{ height: '10vh'}}>
+          <footer>© 2025 Web Technologies Project</footer>
         </div>
       </div>
-      <footer>© 2025 Web Technologies Project</footer>
     </div>
   );
 }

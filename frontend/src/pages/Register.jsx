@@ -44,53 +44,66 @@ export default function Register() {
 
   return (
     <div>
-      <div>
-        <h2>Register</h2>
+      <div className='page-welcome'>
+        
+        <div style={{ height: '30vh'}}>
+          <h1>Register</h1>
+        </div>
+
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div>
-            <input
-              type="text"
-              placeholder="Nick"
-              value={nick}
-              onChange={(e) => setNick(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Registering...' : 'Register'}
-            </button>
-          </div>
-        </form>
+        
+        <div style={{ height: '40vh'}}>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <input
+                type="text"
+                placeholder="Nick"
+                value={nick}
+                onChange={(e) => setNick(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Registering...' : 'Register'}
+              </button>
+            </div>
+          </form>
+        </div>
 
-        <p> Already have an account?{' '}
-          <a href="/login">Login here</a>
-        </p>
+        <div style={{ height: '20vh'}}>
+          <p> Already have an account?{' '}
+            <a href="/login">Login here</a>
+          </p>
 
-        <div>
-          <button onClick={() => navigate('/')}>Back to home</button>
+          <div>
+            <button onClick={() => navigate('/')}>Back to home</button>
+          </div>
+
+        </div>
+
+        <div className="page-footer" style={{ height: '10vh'}}>
+          <footer>© 2025 Web Technologies Project</footer>
         </div>
       </div>
-      <footer>© 2025 Web Technologies Project</footer>
     </div>
   );
 }

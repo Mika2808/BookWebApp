@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Welcome from './pages/Welcome'
 import Books from './pages/Books'
+import BookMore from './pages/BookReview'
 import ToRead from './pages/ToRead'
 import RandomBook from './pages/RandomBook'
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>}/>
         <Route path="/books" element={<PrivateRoute><Books /></PrivateRoute>}/>
+        <Route path="/books/:id" element={<PrivateRoute><BookMore /></PrivateRoute>}/>
         <Route path="/to-read" element={<PrivateRoute><ToRead /></PrivateRoute>}/>
         <Route path="/random-book" element={<PrivateRoute><RandomBook /></PrivateRoute>}/>
 

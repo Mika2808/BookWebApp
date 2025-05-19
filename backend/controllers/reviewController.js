@@ -3,8 +3,9 @@ const { database } = require('../config/database');
 // Create a new review
 exports.createReview = async (req, res) => {
   const { bookId } = req.params;
-  const { review, rating } = req.body;
-  const userId = req.user.id;  // Assume `req.user.id` comes from a JWT token
+  const { review } = req.body;
+  const userId = req.user.id; 
+  const rating = 5;
 
   try {
     // Insert review into the database
