@@ -8,51 +8,89 @@ A RESTful API for a book-focused web application inspired by platforms like Empi
 ### Implemented Features
 
 #### User Authentication & Security
-- User registration and login with:
-  - Hashed passwords using **bcrypt**
-  - Unique `email` and `nick` validation
-- JWT-based **authentication and role-based authorization**
-  - Admin users can manage all content
-  - Regular users can only edit their own data
-- Middleware for token verification and access control
+- Secure registration and login:
+  - Passwords hashed with bcrypt
+  - Unique `email` and `nick` constraints
+- JWT-based authentication and role-based authorization:
+  - Admin users can manage all data
+  - Regular users can modify only their own content
+- Middleware for token verification and role access control
 
 #### Book Management
-- Database schema for books with fields:
-  - Title, Author, Price, Category, Cover Image
-- CRUD operations for books
-  - **Only admins** can create, update, or delete books
+- Full CRUD operations for books:
+  - Fields include: Title, Author, Price, Category, Cover Image
 - Browse books by:
   - All books
   - Category
-  - Random (Book Roulette)
+  - Random selection ("Book Roulette")
+- Only admins can add, update, or delete books
 
-#### Reviews System
+#### Review System
 - Users can:
-  - Add a review (rating + comment)
-  - Edit or delete their own reviews
+  - Add, edit, and delete their own reviews (rating + comment)
 - Admins can delete any review
-- API paths structured as `/books/:id/reviews`
+- API routes follow the structure `/books/:id/reviews`
 
 #### "To Read" List
 - Users can:
-  - Add books to their personal list
-  - View their saved books
-  - Remove books from the list
-- API paths structured for both book-level and user-level access
+  - Add and remove books from their personal list
+  - View saved books
+- Separate endpoints for user-level and book-level operations
 
-#### Data Validation
-- Server-side input validation for:
-  - Unique nicknames and emails
-  - Proper email format
-  - Presence of required fields
+#### Validation
+- Server-side validation for:
+  - Unique emails and nicknames
+  - Valid email format
+  - Required field presence
 
 ---
 
-## Stage 2 – Client (Coming Next)
+## Stage 2 – Frontend (Complete)
 
-### Goals
-- Build a **Progressive Web App (PWA)** using Vite + React
-- Implement all backend functionalities via frontend
-- Add client-side validation before submitting to backend
-- Cache content for offline use
-- Use at least one native feature (e.g., notifications or geolocation)
+### Overview
+A modern web client built with React and Vite. All backend functionality is implemented in a responsive and interactive user interface.
+
+### Implemented Features
+
+#### User Interface
+- Clean, minimal UI with navigation and status messages
+- Public and authenticated routes
+- Role-based UI control (admin vs regular user)
+
+#### Book Browsing
+- Paginated book listings
+- Individual book pages with:
+  - Description
+  - Cover
+  - Reviews
+
+#### Review System
+- Authenticated users can add new reviews
+- Reviews are displayed on book detail pages
+
+#### Authentication
+- Token-based login with JWT stored in localStorage
+- Login and registration forms with validation
+- Auto-logout and protected route support
+
+#### "To Read" List
+- Users can:
+  - Add books to a personal reading list
+  - Remove books from the list
+  - View their saved books
+
+#### Styling and Layout
+- Custom CSS styling including:
+  - Colored header with white text
+  - Rounded layout containers
+  - Dark buttons with white/gray text
+  - Responsive and centered forms with styled inputs and padding
+
+---
+
+## Tech Stack
+
+- Backend: Node.js, Express, PostgreSQL
+- Authentication: JWT and bcrypt
+- Frontend: React, Vite
+- Styling: Custom CSS (with responsive design)
